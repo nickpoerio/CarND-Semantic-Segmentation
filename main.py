@@ -139,8 +139,8 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
         for image, label in get_batches_fn(batch_size):
             #training
             _, loss = sess.run([train_op, cross_entropy_loss], 
-            feed_dict={input_image: image, correct_label: label,keep_prob: 0.66, learning_rate: 0.001})
-            print("Cross Entropy Loss =  {:.3f}".format(loss))
+            feed_dict={input_image: image, correct_label: label,keep_prob: 0.66, learning_rate: 0.0003})
+            print("Cross Entropy Loss =  {:.3f} (epoch #{})".format(loss,ii))
 
 tests.test_train_nn(train_nn)
 
@@ -148,7 +148,7 @@ tests.test_train_nn(train_nn)
 def run():
     num_classes = 2
     image_shape = (160, 576)
-    data_dir = './data'
+    data_dir = '/data'
     runs_dir = './runs'
     tests.test_for_kitti_dataset(data_dir)
 
@@ -177,7 +177,7 @@ def run():
         logits, train_op, cross_entropy_loss = optimize(layer_output, correct_label, learning_rate, num_classes)
 
         # TODO: Train NN using the train_nn function
-        epochs = 50 #
+        epochs = 10 #
         batch_size = 16
         train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image,
         correct_label, keep_prob, learning_rate)
